@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran PAI - Salat Rawatib</title>
+    <style>
+        /* ================= VARIABLES & RESET ================= */
+        :root {
+            --navy: #1a365d;
+            --blue: #3182ce;
+            --light-blue: #ebf8ff;
+            --yellow: #ecc94b;
+            --red: #e53e3e;
+            --dark-red: #c53030;
+            --white: #ffffff;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-700: #4a5568;
+            --text-main: #2d3748;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ================= TYPOGRAPHY & ACCESSIBILITY ================= */
+        h1, h2, h3, h4 { color: var(--navy); }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.8rem; margin-bottom: 1rem; border-bottom: 3px solid var(--yellow); display: inline-block; padding-bottom: 5px; }
+        p { font-size: 1.1rem; margin-bottom: 1rem; }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            min-height: 48px; /* Accessible touch target */
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+        
+        button:focus, input:focus {
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5);
+        }
+
+        /* ================= NAVIGATION ================= */
+        header {
+            background-color: var(--navy);
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--yellow); }
+
+        .nav-links {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .nav-links li button {
+            background: transparent;
+            color: var(--white);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .nav-links li button:hover, .nav-links li button.active {
+            background-color: var(--blue);
+            color: var(--white);
+        }
+
+        .top-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-btn:hover { background: rgba(255,255,255,0.3); }
+        .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+
+        .hamburger { display: none; background: transparent; color: white; padding: 10px; }
+        .hamburger svg { width: 30px; height: 30px; fill: currentColor; }
+
+        /* ================= MAIN LAYOUT ================= */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            min-height: calc(100vh - 140px);
+        }
+
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+        }
+
+        /* ================= BERANDA ================= */
+        .hero {
+            background-color: var(--red);
+            background-image: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 100%);
+            color: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+        }
+        .hero h1 { color: var(--yellow); margin-bottom: 15px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 25px; }
+        .btn-primary { background-color: var(--yellow); color: var(--navy); padding: 12px 30px; font-size: 1.2rem; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { background-color: #f6e05e; transform: translateY(-2px); }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .progress-container { width: 100%; background-color: var(--gray-200); border-radius: 10px; height: 24px; overflow: hidden; margin-top: 10px; }
+        .progress-bar { height: 100%; background-color: var(--blue); width: 0%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold; }
+        
+        .badge { background: var(--light-blue); border: 2px solid var(--blue); padding: 15px; border-radius: 50%; width: 100px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto; text-align: center;}
+        .badge svg { width: 40px; height: 40px; fill: var(--yellow); margin-bottom: 5px;}
+
+        .thumbnail-container { display: flex; gap: 15px; margin-top: 15px; }
+        .thumbnail { flex: 1; background: var(--light-blue); padding: 15px; border-radius: var(--radius-md); text-align: center; border: 2px dashed var(--blue); cursor: pointer; transition: transform 0.2s;}
+        .thumbnail:hover { transform: scale(1.05); }
+
+        /* ================= MATERI ================= */
+        .materi-content ul, .materi-content ol { margin-left: 20px; margin-bottom: 15px; }
+        .materi-content li { margin-bottom: 8px; }
+        .highlight { background-color: var(--yellow); color: var(--navy); padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+
+        .flashcard-container { display: flex; justify-content: center; margin: 30px 0; perspective: 1000px; }
+        .flashcard { width: 100%; max-width: 400px; height: 250px; position: relative; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .fc-front, .fc-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .fc-front { background-color: var(--blue); color: white; }
+        .fc-back { background-color: var(--yellow); color: var(--navy); transform: rotateY(180deg); }
+        .fc-controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .fc-btn { background: var(--navy); color: white; padding: 8px 15px; }
+
+        .interactive-sim { background: var(--navy); padding: 20px; border-radius: var(--radius-lg); color: white; text-align: center; margin-top: 20px; }
+        .sim-timeline { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; flex-wrap: wrap;}
+        .sim-node { flex: 1; background: var(--blue); padding: 15px 5px; border-radius: var(--radius-md); cursor: pointer; font-weight: bold; transition: background 0.3s; min-width: 80px;}
+        .sim-node:hover, .sim-node.active { background: var(--yellow); color: var(--navy); }
+        .sim-info { background: white; color: var(--navy); padding: 15px; border-radius: var(--radius-md); margin-top: 15px; display: none; font-weight: bold; }
+
+        /* ================= KUIS ================= */
+        .kuis-setup { text-align: center; }
+        .input-group { margin-bottom: 20px; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid var(--blue); border-radius: var(--radius-md); font-size: 1rem; }
+        
+        .kuis-area { display: none; }
+        .question-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--navy); border-bottom: 2px solid var(--gray-200); padding-bottom: 10px;}
+        .question-text { font-size: 1.3rem; margin-bottom: 20px; font-weight: bold; }
+        .options-grid { display: grid; gap: 10px; }
+        .option-btn { background: var(--gray-100); border: 2px solid var(--gray-200); padding: 15px; text-align: left; font-size: 1.1rem; color: var(--text-main); display: flex; align-items: center; }
+        .option-btn:hover { background: var(--light-blue); border-color: var(--blue); }
+        .option-btn.correct { background: #c6f6d5; border-color: #38a169; color: #22543d; }
+        .option-btn.wrong { background: #fed7d7; border-color: #e53e3e; color: #742a2a; }
+        .option-label { font-weight: bold; margin-right: 15px; background: var(--navy); color: white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0;}
+
+        .certificate { display: none; text-align: center; background: linear-gradient(135deg, var(--navy), var(--blue)); color: white; padding: 40px; border-radius: var(--radius-lg); border: 10px solid var(--yellow); }
+        .cert-title { font-size: 2.5rem; color: var(--yellow); margin-bottom: 10px; }
+        .cert-name { font-size: 2rem; font-weight: bold; border-bottom: 2px dashed white; display: inline-block; padding-bottom: 5px; margin: 20px 0; }
+        .score-display { font-size: 4rem; font-weight: bold; color: var(--yellow); line-height: 1; margin: 20px 0; }
+
+        /* ================= RESPONSIVE MEDIA QUERIES ================= */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--navy);
+                padding: 10px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+            .nav-links.show { display: flex; }
+            .nav-links li button { width: 100%; text-align: left; padding: 15px; border-radius: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .thumbnail-container { flex-direction: column; }
+            .hero h1 { font-size: 1.8rem; }
+            .sim-timeline { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">PAI Kelas 3</div>
+            <button class="hamburger" id="btn-menu" aria-label="Menu">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+            <ul class="nav-links" id="nav-menu">
+                <li><button onclick="nav('beranda')" class="active" id="nav-beranda">Beranda</button></li>
+                <li><button onclick="nav('materi')" id="nav-materi">Materi</button></li>
+                <li><button onclick="nav('contoh')" id="nav-contoh">Contoh Soal</button></li>
+                <li><button onclick="nav('kuis')" id="nav-kuis">Kuis</button></li>
+                <li><button onclick="nav('refleksi')" id="nav-refleksi">Refleksi</button></li>
+                <li><button onclick="nav('pengembang')" id="nav-pengembang">Pengembang</button></li>
+            </ul>
+            <div class="top-controls">
+                <button class="icon-btn" id="btn-audio" aria-label="Toggle Audio" onclick="toggleAudio()">
+                    <!-- Volume SVG -->
+                    <svg id="icon-vol-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <svg id="icon-vol-off" style="display:none;" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="Fullscreen" onclick="toggleFullscreen()">
+                    <!-- Fullscreen SVG -->
+                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main>
+        <!-- 1. BERANDA -->
+        <section id="beranda" class="section active">
+            <div class="hero">
+                <h1>Selamat Datang di Modul Salat Rawatib!</h1>
+                <p>Mari belajar tentang salat sunah yang menjadi teman setia salat wajib kita. Kumpulkan pahala dan jadilah anak yang disayang Allah.</p>
+                <button class="btn-primary" onclick="nav('materi'); playSound('click');">Mulai Belajar Sekarang</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h2>Dashboard Kemajuan</h2>
+                    <p>Progres belajar kamu hari ini:</p>
+                    <div class="progress-container" aria-label="Progress belajar">
+                        <div class="progress-bar" id="main-progress">0%</div>
+                    </div>
+                    
+                    <h3 style="margin-top: 20px;">Contoh Penerapan</h3>
+                    <div class="thumbnail-container">
+                        <div class="thumbnail" onclick="nav('contoh')">
+                            <strong>Sebelum Zuhur</strong><br>
+                            <small>2 atau 4 Rakaat Qabliyah</small>
+                        </div>
+                        <div class="thumbnail" onclick="nav('contoh')">
+                            <strong>Sesudah Magrib</strong><br>
+                            <small>2 Rakaat Ba'diyah</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="text-align: center;">
+                    <h2>Pencapaian</h2>
+                    <div class="badge" id="badge-status">
+                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span style="color: var(--navy); font-weight: bold; font-size: 0.9rem;" id="badge-text">Pemula</span>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray-700);">Selesaikan kuis untuk mendapatkan gelar "Ahli Rawatib".</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MATERI -->
+        <section id="materi" class="section">
+            <div class="card materi-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Bab 9: Senangnya Salat Rawātib</h2>
+                    <button class="btn-primary" style="padding: 8px 15px; font-size: 1rem;" onclick="bacaMateri()">
+                        🔊 Dengarkan
+                    </button>
+                </div>
+
+                <h3>1. Pengertian Salat Rawātib</h3>
+                <p>Salat Rawātib adalah salat sunnah yang dilakukan untuk mengiringi salat fardu (wajib) lima waktu, baik dikerjakan sebelum maupun sesudah salat fardu.</p>
+
+                <h3>2. Macam-Macam Salat Rawātib</h3>
+                <p>Berdasarkan waktunya, salat ini terbagi menjadi dua:</p>
+                <ul>
+                    <li><span class="highlight">Qabliyah:</span> Salat sunnah yang dikerjakan <strong>sebelum</strong> salat fardu.</li>
+                    <li><span class="highlight">Ba'diyah:</span> Salat sunnah yang dikerjakan <strong>sesudah</strong> salat fardu.</li>
+                </ul>
+                <p><em>Catatan: Salat Rawatib Ba’adiyah tidak ada pada salat fardu Subuh & Ashar.</em></p>
+
+                <!-- Interactive Flashcard -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc" onclick="flipCard()">
+                        <div class="fc-front">
+                            <span style="font-size: 3rem;">❓</span>
+                            <h3>Apa itu Hukum Muakad?</h3>
+                            <p>(Klik untuk membalik)</p>
+                        </div>
+                        <div class="fc-back">
+                            <span style="font-size: 2rem;">🌟</span>
+                            <h3>Sangat Dianjurkan</h3>
+                            <p>Salat ini rutin dan hampir tidak pernah ditinggalkan oleh Rasulullah saw.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-controls">
+                    <button class="fc-btn" onclick="prevCard()">&laquo; Sebelumnya</button>
+                    <button class="fc-btn" onclick="nextCard()">Selanjutnya &raquo;</button>
+                </div>
+
+                <h3 style="margin-top: 30px;">3. Ketentuan Penting</h3>
+                <ul>
+                    <li>Dikerjakan secara <strong>sendiri (munfarid)</strong>, tidak disunnahkan berjemaah.</li>
+                    <li><strong>Tidak didahului</strong> dengan azan maupun iqamah.</li>
+                    <li>Dianjurkan untuk <strong>berpindah tempat</strong> dari tempat salat fardu sebelum mengerjakan salat rawātib.</li>
+                </ul>
+
+                <h3>4. Hikmah Salat Rawātib</h3>
+                <ul>
+                    <li><strong>Menyempurnakan salat wajib:</strong> Menutup kekurangan saat mengerjakan salat fardu.</li>
+                    <li><strong>Mendekatkan diri kepada Allah:</strong> Menambah kasih sayang Allah Swt.</li>
+                    <li><strong>Ketenangan jiwa:</strong> Memberikan rasa damai dalam hati.</li>
+                    <li><strong>Janji pahala:</strong> Orang yang merutinkan 12 rakaat sehari semalam dijanjikan Allah akan dibangunkan rumah di surga.</li>
+                </ul>
+
+                <!-- Interactive Simulation -->
+                <div class="interactive-sim">
+                    <h3>Visualisasi Waktu Salat Rawatib</h3>
+                    <p>Pilih waktu salat wajib di bawah ini untuk melihat salat rawatibnya:</p>
+                    <div class="sim-timeline">
+                        <button class="sim-node" onclick="showSimInfo('subuh', this)">Subuh</button>
+                        <button class="sim-node" onclick="showSimInfo('zuhur', this)">Zuhur</button>
+                        <button class="sim-node" onclick="showSimInfo('ashar', this)">Ashar</button>
+                        <button class="sim-node" onclick="showSimInfo('magrib', this)">Magrib</button>
+                        <button class="sim-node" onclick="showSimInfo('isya', this)">Isya</button>
+                    </div>
+                    <div id="sim-display" class="sim-info">
+                        Pilih waktu salat di atas.
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">5. Rincian Pembagian Rakaat</h3>
+                <h4>A. Salat Rawatib Muakad (Sangat Dianjurkan - 10/12 Rakaat)</h4>
+                <ul>
+                    <li>2 rakaat sebelum Shubuh (Qabliyah)</li>
+                    <li>2 atau 4 rakaat sebelum Zuhur (Qabliyah)</li>
+                    <li>2 rakaat sesudah Zuhur (Ba'diyah)</li>
+                    <li>2 rakaat sesudah Magrib (Ba'diyah)</li>
+                    <li>2 rakaat sesudah Isya (Ba'diyah)</li>
+                </ul>
+
+                <h4>B. Salat Rawatib Ghairu Muakad (Anjuran Biasa)</h4>
+                <ul>
+                    <li>2 rakaat sebelum Zuhur (tambahan jika qabliyah muakad hanya 2)</li>
+                    <li>2 rakaat sesudah Zuhur (tambahan)</li>
+                    <li>4 rakaat sebelum Ashar (Qabliyah)</li>
+                    <li>2 rakaat sebelum Magrib (Qabliyah)</li>
+                    <li>2 rakaat sebelum Isya (Qabliyah)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. CONTOH SOAL -->
+        <section id="contoh" class="section">
+            <div class="card">
+                <h2>Contoh Soal & Pembahasan</h2>
+                <p>Pelajari 4 contoh kasus di bawah ini sebelum memulai kuis.</p>
+                
+                <div class="card" style="background: var(--light-blue); border-left: 5px solid var(--blue);">
+                    <strong>Contoh 1:</strong><br>
+                    Ahmad selesai melaksanakan salat Magrib. Ia kemudian berdiri lagi untuk melaksanakan salat sunah 2 rakaat. Apa nama salat yang dilakukan Ahmad?<br>
+                    <span style="color: var(--navy); font-weight: bold;">Jawaban: Salat Rawatib Ba'diyah Magrib. (Hukumnya Muakad)</span>
+                </div>
+                
+                <div class="card" style="background: var(--light-blue); border-left: 5px solid var(--blue);">
+                    <strong>Contoh 2:</strong><br>
+                    Bolehkah kita salat Rawatib secara berjemaah di masjid?<br>
+                    <span style="color: var(--navy); font-weight: bold;">Jawaban: Tidak disunahkan. Salat Rawatib dikerjakan secara sendirian (munfarid).</span>
+                </div>
+
+                <div class="card" style="background: var(--light-blue); border-left: 5px solid var(--blue);">
+                    <strong>Contoh 3:</strong><br>
+                    Siti ingin salat sunah setelah salat Subuh. Apakah boleh?<br>
+                    <span style="color: var(--navy); font-weight: bold;">Jawaban: Tidak boleh. Tidak ada salat Rawatib Ba'diyah setelah salat Subuh dan Ashar.</span>
+                </div>
+
+                <div class="card" style="background: var(--light-blue); border-left: 5px solid var(--blue);">
+                    <strong>Contoh 4:</strong><br>
+                    Apa keutamaan merutinkan salat Rawatib 12 rakaat sehari semalam?<br>
+                    <span style="color: var(--navy); font-weight: bold;">Jawaban: Allah akan membangunkan sebuah rumah di surga baginya.</span>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn-primary" onclick="nav('kuis'); playSound('click');">Lanjut ke Kuis Ujian</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. KUIS -->
+        <section id="kuis" class="section">
+            <div class="card">
+                <!-- Setup Area -->
+                <div id="kuis-setup" class="kuis-setup">
+                    <h2>Ujian Salat Rawatib</h2>
+                    <p>Uji pemahamanmu dengan 30 soal pilihan ganda.</p>
+                    <div class="input-group">
+                        <label for="student-name">Nama Lengkap:</label>
+                        <input type="text" id="student-name" placeholder="Masukkan namamu..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="student-class">Kelas:</label>
+                        <input type="text" id="student-class" placeholder="Contoh: Kelas 3A" required>
+                    </div>
+                    <button class="btn-primary" onclick="startQuiz()">Mulai Kuis Sekarang</button>
+                </div>
+
+                <!-- Quiz Area -->
+                <div id="kuis-area" class="kuis-area">
+                    <div class="question-header">
+                        <span id="q-counter">Soal 1 dari 30</span>
+                        <span id="score-live">Skor: 0</span>
+                    </div>
+                    <div id="question-text" class="question-text">Pertanyaan akan muncul di sini?</div>
+                    <div id="options-container" class="options-grid">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Certificate Area -->
+                <div id="certificate-area" class="certificate">
+                    <div class="cert-title">SERTIFIKAT PENGHARGAAN</div>
+                    <p>Diberikan kepada:</p>
+                    <div class="cert-name" id="cert-name-display">Nama Siswa</div>
+                    <p>Telah menyelesaikan Kuis PAI Bab Salat Rawatib Kelas III</p>
+                    <div class="score-display" id="cert-score-display">100</div>
+                    <p id="cert-feedback">Luar biasa! Pertahankan prestasimu.</p>
+                    
+                    <div style="display:flex; justify-content: space-around; margin-top: 30px; font-size: 0.9rem;">
+                        <div>Benar: <span id="stat-benar">0</span></div>
+                        <div>Salah: <span id="stat-salah">0</span></div>
+                    </div>
+                    
+                    <button class="btn-primary" style="margin-top: 30px; background: var(--white); color: var(--navy);" onclick="resetQuiz()">Ulangi Latihan</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. REFLEKSI -->
+        <section id="refleksi" class="section">
+            <div class="card">
+                <h2>Refleksi Belajar</h2>
+                <p>Apa yang kamu rasakan setelah mempelajari Salat Rawatib hari ini?</p>
+                <textarea style="width: 100%; height: 150px; padding: 15px; border-radius: var(--radius-md); border: 2px solid var(--gray-200); margin-bottom: 15px; font-size: 1rem;" placeholder="Tuliskan perasaan atau niatmu di sini... (contoh: Saya berniat untuk mulai melaksanakan salat Qabliyah Subuh besok)."></textarea>
+                <button class="btn-primary" onclick="alert('Terima kasih atas refleksinya! Semangat terus belajarnya ya.'); nav('beranda');">Kirim Refleksi</button>
+            </div>
+        </section>
+
+        <!-- 6. PENGEMBANG -->
+        <section id="pengembang" class="section">
+            <div class="card" style="text-align: center;">
+                <h2>Profil Pengembang</h2>
+                <div style="background: var(--light-blue); padding: 30px; border-radius: var(--radius-lg); display: inline-block; margin-top: 20px;">
+                    <svg style="width: 80px; height: 80px; fill: var(--navy); margin-bottom: 15px;" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 5px;">Bunda Ana</h3>
+                    <p style="color: var(--blue); font-weight: bold; font-size: 1.2rem;">GURU Di Rumah</p>
+                    <p style="margin-top: 15px; font-style: italic;">MEDIA PEMBELAJARAN PAI<br>BAB Salat Rawatib - Kelas III</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--gray-700); font-size: 0.9rem;">
+        &copy; 2026 Media Pembelajaran PAI. Dibuat dengan cinta untuk anak-anak Indonesia.
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ================= STATE MANAGEMENT =================
+        let state = {
+            audioEnabled: true,
+            progress: 0,
+            sectionsVisited: { beranda: true, materi: false, contoh: false, kuis: false, refleksi: false, pengembang: false },
+            quiz: {
+                active: false, currentIndex: 0, score: 0, correct: 0, wrong: 0, name: '', class: ''
+            }
+        };
+
+        // Initialize from LocalStorage
+        if(localStorage.getItem('pai_rawatib_state')) {
+            const savedState = JSON.parse(localStorage.getItem('pai_rawatib_state'));
+            state.sectionsVisited = savedState.sectionsVisited || state.sectionsVisited;
+            state.progress = savedState.progress || 0;
+            updateProgressUI();
+        }
+
+        function saveState() {
+            localStorage.setItem('pai_rawatib_state', JSON.stringify({
+                sectionsVisited: state.sectionsVisited,
+                progress: state.progress
+            }));
+        }
+
+        // ================= NAVIGATION =================
+        function nav(sectionId) {
+            // Hide all
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-links button').forEach(el => el.classList.remove('active'));
+            
+            // Show target
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('nav-' + sectionId).classList.add('active');
+            
+            // Mobile menu hide
+            document.getElementById('nav-menu').classList.remove('show');
+            
+            // Progress logic
+            if(!state.sectionsVisited[sectionId]) {
+                state.sectionsVisited[sectionId] = true;
+                let visitedCount = Object.values(state.sectionsVisited).filter(v => v).length;
+                state.progress = Math.round((visitedCount / 6) * 100);
+                updateProgressUI();
+                saveState();
+            }
+            
+            playSound('click');
+            window.scrollTo(0,0);
+        }
+
+        function updateProgressUI() {
+            const bar = document.getElementById('main-progress');
+            bar.style.width = state.progress + '%';
+            bar.innerText = state.progress + '%';
+            
+            if(state.progress === 100) {
+                document.getElementById('badge-text').innerText = "Ahli Rawatib!";
+                document.getElementById('badge-text').style.color = "var(--red)";
+            }
+        }
+
+        // Hamburger Menu
+        document.getElementById('btn-menu').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('show');
+        });
+
+        // ================= AUDIO ENGINE (Web Audio API Synthesizer) =================
+        // Menggunakan AudioContext agar tidak butuh file eksternal (Single File compliant)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if(!audioCtx) audioCtx = new AudioContext();
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playTone(freq, type, duration) {
+            if(!state.audioEnabled) return;
+            initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + duration);
+        }
+
+        function playSound(type) {
+            if(!state.audioEnabled) return;
+            if(type === 'click') playTone(600, 'sine', 0.1);
+            if(type === 'correct') {
+                playTone(523.25, 'sine', 0.1); // C5
+                setTimeout(() => playTone(659.25, 'sine', 0.15), 100); // E5
+                setTimeout(() => playTone(783.99, 'sine', 0.2), 200); // G5
+            }
+            if(type === 'wrong') {
+                playTone(300, 'sawtooth', 0.2);
+                setTimeout(() => playTone(250, 'sawtooth', 0.3), 150);
+            }
+        }
+
+        function toggleAudio() {
+            state.audioEnabled = !state.audioEnabled;
+            document.getElementById('icon-vol-on').style.display = state.audioEnabled ? 'block' : 'none';
+            document.getElementById('icon-vol-off').style.display = state.audioEnabled ? 'none' : 'block';
+            if(state.audioEnabled) playSound('click');
+        }
+
+        // Web Speech API for Reading Text
+        function bacaMateri() {
+            if ('speechSynthesis' in window) {
+                const text = "Bab 9, Senangnya Salat Rawatib. Salat Rawatib adalah salat sunnah yang dilakukan untuk mengiringi salat fardu lima waktu. Terbagi dua yaitu Qabliyah sebelum salat, dan Ba'diyah sesudah salat.";
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Maaf, browser kamu tidak mendukung fitur suara ini.");
+            }
+        }
+
+        // ================= FULLSCREEN =================
+        function toggleFullscreen() {
+            playSound('click');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // ================= MATERI INTERAKTIF =================
+        // Flashcard
+        const fcData = [
+            { q: "Apa itu Hukum Muakad?", a: "Sangat Dianjurkan. Rutin dikerjakan Nabi saw." },
+            { q: "Berapa rakaat Qabliyah Subuh?", a: "2 Rakaat. (Hukumnya Muakad)" },
+            { q: "Salat fardu apa yang TIDAK punya Ba'diyah?", a: "Subuh dan Ashar." }
+        ];
+        let fcIndex = 0;
+
+        function updateCard() {
+            const fc = document.getElementById('fc');
+            fc.classList.remove('flipped');
+            setTimeout(() => {
+                fc.querySelector('.fc-front h3').innerText = fcData[fcIndex].q;
+                fc.querySelector('.fc-back h3').innerText = fcData[fcIndex].a;
+            }, 300);
+        }
+
+        function flipCard() {
+            document.getElementById('fc').classList.toggle('flipped');
+            playSound('click');
+        }
+
+        function nextCard() { fcIndex = (fcIndex + 1) % fcData.length; updateCard(); playSound('click');}
+        function prevCard() { fcIndex = (fcIndex - 1 + fcData.length) % fcData.length; updateCard(); playSound('click');}
+
+        // Simulation
+        const simData = {
+            'subuh': '<strong>Salat Subuh</strong><br><br>Qabliyah: 2 Rakaat (Muakad)<br>Ba\'diyah: TIDAK ADA',
+            'zuhur': '<strong>Salat Zuhur</strong><br><br>Qabliyah: 2/4 Rakaat (Muakad)<br>Ba\'diyah: 2 Rakaat (Muakad) + 2 (Ghairu Muakad)',
+            'ashar': '<strong>Salat Ashar</strong><br><br>Qabliyah: 4 Rakaat (Ghairu Muakad)<br>Ba\'diyah: TIDAK ADA',
+            'magrib': '<strong>Salat Magrib</strong><br><br>Qabliyah: 2 Rakaat (Ghairu Muakad)<br>Ba\'diyah: 2 Rakaat (Muakad)',
+            'isya': '<strong>Salat Isya</strong><br><br>Qabliyah: 2 Rakaat (Ghairu Muakad)<br>Ba\'diyah: 2 Rakaat (Muakad)'
+        };
+
+        function showSimInfo(waktu, btnElement) {
+            playSound('click');
+            document.querySelectorAll('.sim-node').forEach(el => el.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            const display = document.getElementById('sim-display');
+            display.style.display = 'block';
+            display.innerHTML = simData[waktu];
+        }
+
+        // ================= KUIS ENGINE =================
+        const questions = [
+            { q: "Salat sunah yang dikerjakan mengiringi salat fardu (salat lima waktu) disebut...", options: ["Salat Duha", "Salat Rawatib", "Salat Tahajud"], ans: 1 },
+            { q: "Mengapa salat Rawatib diibaratkan sebagai 'teman setia' salat fardu?", options: ["Karena dikerjakan bersama teman", "Karena dikerjakan sebelum atau sesudah salat fardu", "Karena gerakannya sama persis"], ans: 1 },
+            { q: "Salat sunah Rawatib yang dikerjakan 'sebelum' salat wajib dimulai disebut...", options: ["Salat Qabliyah", "Salat Ba'diyah", "Salat Muakad"], ans: 0 },
+            { q: "Salat sunah Rawatib yang dikerjakan 'sesudah' salat wajib selesai disebut...", options: ["Salat Qabliyah", "Salat Ba'diyah", "Salat Kifayah"], ans: 1 },
+            { q: "Arti dari kata 'Muakad' dalam pembagian salat sunah Rawatib adalah...", options: ["Tidak dianjurkan", "Sangat dianjurkan", "Kadang-kadang saja"], ans: 1 },
+            { q: "Kebalikan dari Muakad, salat sunah yang anjurannya biasa disebut...", options: ["Ghairu Muakad", "Sunah Mutlak", "Fardu Kifayah"], ans: 0 },
+            { q: "Berapakah jumlah rakaat salat Rawatib Muakad dalam sehari?", options: ["6 atau 8 rakaat", "10 atau 12 rakaat", "20 rakaat"], ans: 1 },
+            { q: "Salat fardu yang tidak memiliki salat sunah Rawatib Ba'diyah adalah...", options: ["Zuhur dan Isya", "Magrib dan Zuhur", "Shubuh dan Ashar"], ans: 2 },
+            { q: "Kenapa kita tidak boleh salat Rawatib Ba'diyah setelah salat Shubuh dan Ashar?", options: ["Karena waktu tersebut dilarang untuk salat sunah tanpa sebab", "Karena rakaatnya terlalu panjang", "Karena harus langsung makan"], ans: 0 },
+            { q: "Berapa rakaat salat Qabliyah Shubuh yang termasuk Rawatib Muakad?", options: ["4 rakaat", "2 rakaat", "1 rakaat"], ans: 1 },
+            { q: "Salat Qabliyah Magrib dan Qabliyah Isya memiliki hukum...", options: ["Muakad", "Ghairu Muakad", "Makruh"], ans: 1 },
+            { q: "Setelah salat Isya, Nisa salat sunah 2 rakaat. Salat Nisa adalah...", options: ["Qabliyah Isya", "Ba'diyah Isya", "Ba'diyah Magrib"], ans: 1 },
+            { q: "Setelah azan Ashar, Ali salat sunah 4 rakaat sebelum salat Ashar. Status salatnya adalah...", options: ["Rawatib Muakad", "Rawatib Ghairu Muakad", "Salat Wajib"], ans: 1 },
+            { q: "Keutamaan yang kita dapatkan di dunia jika rajin salat Rawatib adalah...", options: ["Kaya secara instan", "Hati tenang, damai, diberkahi", "Tidak perlu belajar ujian"], ans: 1 },
+            { q: "Di akhirat kelak, pahala salat Rawatib bermanfaat untuk...", options: ["Menggantikan salat teman", "Menutupi kekurangan pada salat wajib kita", "Membeli mainan di surga"], ans: 1 },
+            { q: "Siapakah teladan kita yang hampir tidak pernah meninggalkan salat Rawatib Muakad?", options: ["Para sahabat saja", "Nabi Muhammad saw.", "Para malaikat"], ans: 1 },
+            { q: "Berapa rakaat maksimal salat Rawatib Muakad sebelum salat Zuhur?", options: ["2 atau 4 rakaat", "5 rakaat", "6 rakaat"], ans: 0 },
+            { q: "Jika Ba'diyah Zuhur dikerjakan 4 rakaat, 2 rakaat pertama bernilai Muakad, 2 tambahannya bernilai...", options: ["Wajib", "Haram", "Ghairu Muakad"], ans: 2 },
+            { q: "Membaca niat salat sunah Rawatib dilakukan di dalam...", options: ["Hati saat takbiratul ihram", "Ucapan keras setelah salat", "Buku catatan ibadah"], ans: 0 },
+            { q: "Salat wajib yang memiliki Rawatib Qabliyah sekaligus Ba'diyah berstatus Muakad adalah...", options: ["Shubuh", "Zuhur", "Ashar"], ans: 1 },
+            { q: "Hukum melaksanakan salat Rawatib bagi umat Islam adalah...", options: ["Wajib", "Sunah", "Makruh"], ans: 1 },
+            { q: "Manakah yang merupakan salat Rawatib Ghairu Muakad?", options: ["2 rakaat sebelum Shubuh", "2 rakaat sesudah Magrib", "4 rakaat sebelum Ashar"], ans: 2 },
+            { q: "Cara yang benar dalam melaksanakan salat Rawatib adalah dikerjakan secara...", options: ["Berjemaah", "Sendirian (munfarid)", "Sambil berbicara"], ans: 1 },
+            { q: "Mengapa salat Rawatib disebut pembuka pintu surga?", options: ["Karena membuat rajin ibadah & disayang Allah", "Karena namanya mirip malaikat", "Hanya dilakukan di masjid"], ans: 0 },
+            { q: "Salat fardu apa saja yang tidak memiliki salat sunah Rawatib Ba'diyah?", options: ["Zuhur & Isya", "Magrib & Isya", "Shubuh & Ashar"], ans: 2 },
+            // Added 5 questions to make 30
+            { q: "Salat Rawatib yang dikerjakan sebelum salat wajib berfungsi untuk...", options: ["Persiapan jiwa menghadap Allah", "Mengganti salat wajib", "Menambah jumlah rakaat wajib"], ans: 0 },
+            { q: "Salat Rawatib Ba'diyah yang dikerjakan setelah salat Magrib berjumlah...", options: ["2 rakaat", "4 rakaat", "3 rakaat"], ans: 0 },
+            { q: "Merutinkan salat Rawatib (12 rakaat sehari) dijanjikan Allah akan dibangunkan...", options: ["Istana di dunia", "Rumah di surga", "Masjid megah"], ans: 1 },
+            { q: "Salat sunah yang dikerjakan mengiringi salat Isya disebut...", options: ["Rawatib Isya", "Tahajud", "Witir"], ans: 0 },
+            { q: "Salat sunah Qabliyah Zuhur termasuk dalam kelompok salat Rawatib...", options: ["Muakad saja", "Ghairu Muakad saja", "Bisa Muakad (2) & Ghairu Muakad (tambahan)"], ans: 2 }
+        ];
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim();
+            
+            if(!nameInput || !classInput) {
+                alert('Tolong isi nama dan kelasmu dulu ya!');
+                return;
+            }
+
+            state.quiz.name = nameInput;
+            state.quiz.class = classInput;
+            state.quiz.score = 0;
+            state.quiz.correct = 0;
+            state.quiz.wrong = 0;
+            state.quiz.currentIndex = 0;
+            
+            document.getElementById('kuis-setup').style.display = 'none';
+            document.getElementById('certificate-area').style.display = 'none';
+            document.getElementById('kuis-area').style.display = 'block';
+            
+            playSound('click');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const qData = questions[state.quiz.currentIndex];
+            document.getElementById('q-counter').innerText = `Soal ${state.quiz.currentIndex + 1} dari ${questions.length}`;
+            document.getElementById('score-live').innerText = `Skor: ${Math.round(state.quiz.score)}`;
+            document.getElementById('question-text').innerText = qData.q;
+            
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+            
+            const labels = ['A', 'B', 'C'];
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-label">${labels[idx]}</span> ${opt}`;
+                btn.onclick = () => handleAnswer(idx, btn);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex, btnElement) {
+            // Disable all buttons immediately
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            
+            const qData = questions[state.quiz.currentIndex];
+            const isCorrect = selectedIndex === qData.ans;
+            
+            if(isCorrect) {
+                btnElement.classList.add('correct');
+                state.quiz.correct++;
+                state.quiz.score += (100 / questions.length);
+                playSound('correct');
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[qData.ans].classList.add('correct'); // Highlight correct answer
+                state.quiz.wrong++;
+                playSound('wrong');
+            }
+
+            document.getElementById('score-live').innerText = `Skor: ${Math.round(state.quiz.score)}`;
+
+            // Next question delay
+            setTimeout(() => {
+                state.quiz.currentIndex++;
+                if(state.quiz.currentIndex < questions.length) {
+                    renderQuestion();
+                } else {
+                    showCertificate();
+                }
+            }, 1500);
+        }
+
+        function showCertificate() {
+            document.getElementById('kuis-area').style.display = 'none';
+            
+            const finalScore = Math.round(state.quiz.score);
+            document.getElementById('cert-name-display').innerText = state.quiz.name;
+            document.getElementById('cert-score-display').innerText = finalScore;
+            document.getElementById('stat-benar').innerText = state.quiz.correct;
+            document.getElementById('stat-salah').innerText = state.quiz.wrong;
+            
+            let feedback = "";
+            if(finalScore >= 90) feedback = "Luar biasa! Kamu sudah jadi Ahli Rawatib.";
+            else if(finalScore >= 70) feedback = "Bagus sekali! Terus tingkatkan belajarmu.";
+            else feedback = "Tetap semangat! Jangan lupa baca materinya lagi ya.";
+            document.getElementById('cert-feedback').innerText = feedback;
+            
+            document.getElementById('certificate-area').style.display = 'block';
+            playSound('correct'); // Fanfare
+            
+            // Auto complete progress if score > 70
+            if(finalScore >= 70 && !state.sectionsVisited['kuis']) {
+                state.sectionsVisited['kuis'] = true;
+                nav('kuis'); // Re-trigger progress calculation
+            }
+        }
+
+        function resetQuiz() {
+            playSound('click');
+            document.getElementById('certificate-area').style.display = 'none';
+            document.getElementById('kuis-setup').style.display = 'block';
+        }
+
+        // Init setup
+        nav('beranda');
+    </script>
+</body>
+</html>
